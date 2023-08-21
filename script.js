@@ -113,3 +113,19 @@ let loadOtherImages = (query) => {
     loadImages("nature");
   }
 };
+
+let searchQuery;
+
+const handleSearchQuery = (e) => {
+  searchQuery = e.target.value.toLowerCase();
+};
+
+const searchImages = () => {
+  let hasImage = document.querySelector(".card").querySelector("img");
+
+  if (hasImage) {
+    loadOtherImages(searchQuery);
+  } else {
+    loadImages(searchQuery);
+  }
+};

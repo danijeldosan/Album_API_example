@@ -166,9 +166,17 @@
             >
           </p>
           <div class="input-group">
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              oninput="handleSearchQuery(event)"
+            />
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                onclick="searchImages()"
+              >
                 Search
               </button>
             </div>
