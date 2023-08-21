@@ -79,8 +79,37 @@ let loadImages = (query) => {
 
         cards[i].insertBefore(img, cards[i].firstChild); //adds the new image before other content
 
-        cards[i].querySelector("small").innerText = "ID: " + body.photos[i].id;
+        cards[i].querySelector("small").innerText = "ID: " + body.photos[i].id; //replaces 9 min with img id
       }
     })
     .catch((err) => console.error(err));
+};
+
+let loadOtherImages = (query) => {
+  let hasImage = document.querySelector(".card").querySelector("img");
+
+  if (hasImage) {
+    fetch("https://api.pexels.com/v1/search?query=" + query, {
+      method: "GET",
+      headers: {
+        Authorization:
+          "uyRPNutRdhsVOGtnMxslIgRlIpBLrzCaiahLcredM2hr7ZwA2mzpWgg3",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((body) => {
+        let cards = document.getElementsByClassName("card");
+        for (let i = 0; i < cards.length; i++) {
+          cards[i].firstElementChild.src = body.photos[i].src.large; //switching the pre-existing image with a new image source
+          cards[i].querySelector("small").innerText =
+            "ID: " + body.photos[i].id;
+        }
+      })
+      .catch((err) => console.error(err));
+  } else {
+    //if cards still have svg we need the first method to handle change
+    loadImages("nature");
+  }
 };
