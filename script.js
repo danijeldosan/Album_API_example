@@ -56,3 +56,31 @@ window.onload = () => {
       btn.onclick = (event) => event.currentTarget.closest(".col").remove();
     });
 };
+
+let loadImages = (query) => {
+  fetch("https://api.pexels.com/v1/search?query=" + query, {
+    method: "GET",
+    headers: {
+      Authorization: "uyRPNutRdhsVOGtnMxslIgRlIpBLrzCaiahLcredM2hr7ZwA2mzpWgg3",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((body) => {
+      let cards = document.getElementsByClassName("card");
+
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].firstElementChild.remove(); //removes svg
+        let img = document.createElement("img");
+        img.src = body.photos[i].src.large;
+        img.className = "bd-placeholder-img card-img-top";
+        img.style = "height:200px; object-fit: cover";
+
+        cards[i].insertBefore(img, cards[i].firstChild); //adds the new image before other content
+
+        cards[i].querySelector("small").innerText = "ID: " + body.photos[i].id;
+      }
+    })
+    .catch((err) => console.error(err));
+};
